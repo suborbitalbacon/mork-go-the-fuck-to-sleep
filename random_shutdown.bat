@@ -5,12 +5,12 @@
 @REM create a random time to shutdown
 @REM TODO: make min and max arguments
 call:random_shutdown_time 5 30
-@REM alert the user
-@REM TODO: make the alert optional through an argument
-powershell "(new-object -COM WScript.Shell).popup('shutdown in %time_to_die_minutes%',0,'Go the fuck to sleep.')"
 @REM schedule the shutdown
 shutdown -s -t %time_to_die_seconds%
 @REM TODO: Deal with the timer here and send multiple warnings
+@REM alert the user
+@REM TODO: make the alert optional through an argument
+powershell "(new-object -COM WScript.Shell).popup('shutdown in %time_to_die_minutes%',0,'Go the fuck to sleep.')"
 
 goto:EOF
 @REM random_shutdown_time()
