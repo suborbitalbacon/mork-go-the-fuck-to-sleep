@@ -55,12 +55,15 @@ goto :init
     @REM create a random time to shutdown
     call:random_shutdown_time %min_time% %max_time%
 
-    @REM schedule the shutdown
-    shutdown -s -t %time_to_die_seconds%
+    @REM alert the user, without pasuing the script
+    if %do_alert% == true start "" cmd /c "echo shutdown in %time_to_die_minutes%!&echo(&pause"
 
-    @REM TODO: Deal with the timer here and send multiple warnings
-    @REM alert the user
-    if %do_alert% == true powershell "(new-object -COM WScript.Shell).popup('shutdown in %time_to_die_minutes%',0,'Go the fuck to sleep.')"
+    @REM schedule the shutdown
+    @REM using 'shutdown -s -t' will result in a warning,
+    @REM so we will handle the timer here 
+    timeout /t %time_to_die_seconds% /nobreak > NUL
+    @REM actually shut down
+    shutdown -s
     goto:EOF
 
 :random_shutdown_time
